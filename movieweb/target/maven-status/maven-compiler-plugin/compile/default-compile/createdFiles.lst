@@ -1,0 +1,14 @@
+com\jsf\entities\User.class
+com\jsf\entities\Actor.class
+com\jsf\entities\Movie.class
+com\jsf\entities\Roles.class
+com\jsf\dao\PersonDAO.class
+com\jsf\dao\UserDAO.class
+com\jsf\entities\Award.class
+com\jsf\entities\Genre.class
+com\jsf\entities\Person.class
+com\jsf\entities\Rating.class
+com\jsfcourse\person\PersonEditBB.class
+com\jsfcourse\user\UserListBB.class
+com\jsfcourse\person\PersonListBB.class
+com\jsfcourse\user\UserEditBB.class
