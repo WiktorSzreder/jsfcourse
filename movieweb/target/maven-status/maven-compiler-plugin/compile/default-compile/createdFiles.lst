@@ -1,4 +1,7 @@
+com\jsf\dao\MovieDAO.class
+com\jsfcourse\movie\MovieListBB.class
 com\jsf\entities\User.class
+com\jsfcourse\movie\MovieEditBB.class
 com\jsf\entities\Actor.class
 com\jsf\entities\Movie.class
 com\jsf\entities\Roles.class

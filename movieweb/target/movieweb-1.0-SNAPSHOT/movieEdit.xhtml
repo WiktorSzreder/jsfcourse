@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+
+    <f:metadata>
+        <f:viewAction action="#{movieEditBB.onLoad()}" />
+    </f:metadata>
+
+    <h:head>
+        <meta charset="utf-8" />
+        <title>Movie Edit</title>
+    </h:head>
+
+    <h:body style="background-color: #eee; margin: 0.5em;">
+
+        <p:panel toggleable="true" header="Edit Movie">
+
+            <h:form rendered="#{movieEditBB.movie != null}">
+                <h:panelGrid columns="3" cellpadding="5">
+
+                    <h:outputLabel for="m-title" value="Title:" />
+                    <p:inputText id="m-title" value="#{movieEditBB.movie.title}"
+                                 required="true" requiredMessage="Please provide a title"
+                                 validatorMessage="Maximum 100 characters">
+                        <f:validateLength maximum="100" />
+                    </p:inputText>
+                    <p:message for="m-title" display="icon" />
+
+                    <h:outputLabel for="m-releaseDate" value="Release Date:" />
+                    <p:inputText id="m-releaseDate" value="#{movieEditBB.movie.releaseDate}"
+                                 required="true" requiredMessage="Please provide a release date"
+                                 converterMessage="Invalid date format (e.g., 15-07-2018)">
+                        <f:convertDateTime pattern="dd-MM-yyyy" />
+                    </p:inputText>
+                    <p:message for="m-releaseDate" display="icon" />
+
+                    <h:outputLabel for="m-description" value="Description:" />
+                    <p:inputText id="m-description" value="#{movieEditBB.movie.description}"
+                                 required="true" requiredMessage="Please provide a description">
+                    </p:inputText>
+                    <p:message for="m-description" display="icon" />
+                    
+                    <h:outputLabel for="m-genre" value="Genre:" /><!-- zrozumieć jak to działa z łączeniem tabel -->
+                    <p:inputText id="m-genre" value="#{movieEditBB.movie.genreIdgenre}"
+                                 required="true" requiredMessage="Please provide the genre"
+                                 validatorMessage="Maximum 30 characters">
+                        <f:validateLength maximum="30" />
+                    </p:inputText>
+                    <p:message for="m-genre" display="icon" />
+
+                </h:panelGrid>
+
+                <p:messages id="msgs" />
+
+                <p:commandButton value="Save" action="#{movieEditBB.saveData()}"
+                                 style="margin-right: 1em;" update="@form" />
+
+                <p:button value="Cancel" outcome="movieList" />
+            </h:form>
+
+        </p:panel>
+
+    </h:body>
+
+</html>
