@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="primefaces">
+
+    <ui:composition template="/templates/main-template.xhtml">
+
+        <ui:define name="title">actor List</ui:define>
+
+        <ui:define name="content">
+
+       
+
+        <h:form id="form-table" style="margin-bottom:1em;">
+
+            <p:dataTable value="#{actorListBB.fullList}" var="a">
+
+                <p:column responsivePriority="5">
+                    <f:facet name="header">
+                        <h:outputText value="nazwa aktora" />
+                    </f:facet>
+                    <h:outputText value="#{a.firstName}" />
+                </p:column> 
+
+                                <p:column responsivePriority="5">
+                    <f:facet name="header">
+                        <h:outputText value="id aktora" />
+                    </f:facet>
+                                    <h:outputText value="#{a.idactors}" />
+                </p:column> 
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="opcje" />
+                    </f:facet>
+                    <p:commandButton value="Edit" style="margin-right: 0.5em"
+                                     action="#{actorListBB.editActor(a)}"
+                                     update="@form" />
+
+                    <p:commandButton value="Usuń" style="margin-right: 0.5em"
+                                     action="#{actorListBB.deleteActor(a)}"
+                                     update="@form" />
+            
+                    
+                </p:column>
+            </p:dataTable>
+        </h:form>
+            <p:messages />
+        </ui:define>
+
+    </ui:composition>
+</html>

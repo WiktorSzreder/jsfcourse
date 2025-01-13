@@ -19,7 +19,7 @@ import com.jsf.entities.Movie;
 public class MovieEditBB implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private static final String PAGE_MOVIE_LIST = "movieList?faces-redirect=true";
+    private static final String PAGE_MOVIE_LIST = "/public/movieList?faces-redirect=true";
     private static final String PAGE_STAY_AT_THE_SAME = null;
 
     private Movie movie = new Movie();
@@ -72,6 +72,9 @@ public class MovieEditBB implements Serializable {
             return PAGE_STAY_AT_THE_SAME;
         }
 
+        return PAGE_MOVIE_LIST;
+    }
+    public String goback() {
         return PAGE_MOVIE_LIST;
     }
 }

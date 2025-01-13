@@ -9,6 +9,8 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 
 import com.jsf.entities.User;  // Import the User entity
+import jakarta.persistence.TypedQuery;
+import java.util.ArrayList;
 
 @Stateless
 public class UserDAO {
@@ -52,6 +54,23 @@ public class UserDAO {
 
         return list;
     }
+// Znajdź użytkownika na podstawie emaila czy nie istnieje juz w bazie danych
+public User findByEmail(String email) {
+    User user = null;
+
+    try {
+        Query query = em.createQuery("SELECT u FROM User u WHERE u.email = :email");
+        query.setParameter("email", email);
+        user = (User) query.getSingleResult();
+    } catch (jakarta.persistence.NoResultException e) {
+        // Brak użytkownika o podanym e-mailu
+        user = null;
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+
+    return user;
+}
 
     // Get a list of Users based on search parameters (like username, email, etc.)
     public List<User> getList(Map<String, Object> searchParams) {
@@ -105,4 +124,35 @@ public class UserDAO {
 
         return list;
     }
+    
+    
+       public User getUserFromDatabase(String email, String password) {
+        try {
+            TypedQuery<User> query = em.createQuery(
+                "SELECT u FROM User u WHERE u.email = :email AND u.password = :password", 
+                User.class
+            );
+            query.setParameter("email", email);
+            query.setParameter("password", password); // Zmień na haszowane hasło, jeśli je haszujesz
+            return query.getSingleResult();
+        } catch (Exception e) {
+            return null; // Jeśli nie znaleziono użytkownika
+        }
+    }
+public List<String> getUserRolesFromDatabase(User user) {
+    // Zakładając, że User ma id
+    Integer userId = user.getIdregisteredUser();
+
+    // Zapytanie JPQL, które pobiera role użytkownika na podstawie jego id
+    TypedQuery<String> query = em.createQuery(
+        "SELECT r.name FROM Roles r JOIN r.userCollection u WHERE u.idregisteredUser = :userId", 
+        String.class
+    );
+    query.setParameter("userId", userId);
+
+    return query.getResultList();
 }
+
+}
+
+

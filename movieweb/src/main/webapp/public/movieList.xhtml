@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="primefaces">
+
+    <ui:composition template="/templates/main-template.xhtml">
+
+        <ui:define name="title">Movie List</ui:define>
+
+        <ui:define name="content">
+
+       
+
+<h:form id="form">
+
+<div class="card">
+    <p:carousel value="#{movieListBB.list}" var="m" circular="true" autoplayInterval="3000"
+                numVisible="3" numScroll="1">
+        <f:facet name="header">
+            <h5>Movies Carousel</h5>
+        </f:facet>
+
+        <div class="product-item" style="margin: 30px;">
+            <div class="product-item-content">
+                <div class="mb-3">
+                    <!-- Dodanie obrazka dla każdego filmu -->
+                    <p:graphicImage name="images/movies/#{m.idmovies}.jpg" style="width: 200px; height: 300px;"/>
+                </div>
+                <div>
+                    <h2 class="mb-1">
+                        <h:outputText value="#{m.title}" />
+                    </h2>
+                    <p class="mb-3">
+                        <h:outputText value="#{m.description}" />
+                    </p>
+                    <h6 class="mt-0 mb-3">
+                        Release Date: 
+                        <h:outputText value="#{m.releaseDate}">
+                            <f:convertDateTime pattern="dd-MM-yyyy" />
+                        </h:outputText>
+                    </h6>
+                    <div class="mt-5">
+                        <p:commandButton value="Edit" icon="pi pi-pencil" styleClass="rounded-button mr-2"
+                                         action="#{movieListBB.editMovie(m)}" />
+                        <p:commandButton value="Delete" icon="pi pi-trash" styleClass="ui-button-danger rounded-button"
+                                         action="#{movieListBB.deleteMovie(m)}" update="@form" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </p:carousel>
+</div>
+
+
+</h:form>
+            <p:messages />
+        </ui:define>
+
+    </ui:composition>
+</html>

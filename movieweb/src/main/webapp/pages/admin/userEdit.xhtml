@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="primefaces">
+    <f:metadata>
+        <f:viewAction action="#{userEditBB.onLoad()}" />
+    </f:metadata>
+    <ui:composition template="/templates/main-template.xhtml">
+
+        <ui:define name="title">
+            JSF 05 - filtry, ochrona zasobów
+        </ui:define>
+
+        <ui:define name="content">
+        <p:panel toggleable="true" header="Edycja użytkownika">
+
+            <h:form rendered="#{userEditBB.user != null}">
+                <h:panelGrid columns="6" cellpadding="5">
+
+                    <h:outputLabel for="u-username" value="Nazwa użytkownika:" />
+                    <p:inputText id="u-username" value="#{userEditBB.user.username}"
+                                 required="true" requiredMessage="Podaj nazwę użytkownika"
+                                 validatorMessage="co najwyżej 40 znaków">
+                        <f:validateLength maximum="40" />
+                    </p:inputText>
+                    <p:message for="u-username" display="icon"/>
+
+                    <h:outputLabel for="u-email" value="Email:" />
+                    <p:inputText id="u-email" value="#{userEditBB.user.email}"
+                                 required="true" requiredMessage="Podaj email"
+                                 validatorMessage="Nieprawidłowy format email">
+                        <f:validateRegex pattern="^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,6}$"
+                                         />
+                    </p:inputText>
+                    <p:message for="u-email" display="icon"/>
+                    
+                       <h:outputLabel for="u-password" value="Password:" />
+                        <p:password id="u-password" value="#{userEditBB.user.password}"
+                                    required="true" requiredMessage="Please provide a password"
+                                    validatorMessage="Maximum 40 characters allowed">
+                            <f:validateLength maximum="40" />
+                        </p:password>
+                        <p:message for="u-password" display="icon"/>
+
+
+                    <h:outputLabel for="u-createdAt" value="Data utworzenia:" />
+                    <p:inputText id="u-createdAt" value="#{userEditBB.user.createdAt}"
+                                 required="true" requiredMessage="Podaj datę utworzenia"
+                                 converterMessage="Niepoprawny format daty (np. 15-07-2018)">
+                        <f:convertDateTime pattern="dd-MM-yyyy"/>
+                    </p:inputText>
+                    <p:message for="u-createdAt" display="icon"/>
+                    
+                        <h:outputLabel value="Wybierz role:" />
+    <p:selectManyCheckbox value="#{userEditBB.selectedRoleIds}">
+        <f:selectItems value="#{userEditBB.availableRoles}" var="role"
+                       itemValue="#{role.idroles}" itemLabel="#{role.name}" />
+    </p:selectManyCheckbox>
+                </h:panelGrid>
+
+                <p:messages id="msgs" />
+
+                <p:commandButton value="Zapisz" action="#{userEditBB.saveData()}"
+                                 style="margin-right: 1em;" update="@form" />
+
+            </h:form>
+
+        </p:panel>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="primefaces">
+    <f:metadata>
+        <f:viewAction action="#{movieEditBB.onLoad()}" />
+    </f:metadata>
+    <ui:composition template="/templates/main-template.xhtml">
+
+        <ui:define name="title">Movie List</ui:define>
+
+        <ui:define name="content">
+
+         <p:panel toggleable="true" header="Edit Movie">
+
+            <h:form rendered="#{movieEditBB.movie != null}">
+                <h:panelGrid columns="3" cellpadding="5">
+
+                    <h:outputLabel for="m-title" value="Title:" />
+                    <p:inputText id="m-title" value="#{movieEditBB.movie.title}"
+                                 required="true" requiredMessage="Please provide a title"
+                                 validatorMessage="Maximum 100 characters">
+                        <f:validateLength maximum="100" />
+                    </p:inputText>
+                    <p:message for="m-title" display="icon" />
+
+                    <h:outputLabel for="m-releaseDate" value="Release Date:" />
+                    <p:inputText id="m-releaseDate" value="#{movieEditBB.movie.releaseDate}"
+                                 required="true" requiredMessage="Please provide a release date"
+                                 converterMessage="Invalid date format (e.g., 15-07-2018)">
+                        <f:convertDateTime pattern="dd-MM-yyyy" />
+                    </p:inputText>
+                    <p:message for="m-releaseDate" display="icon" />
+
+                    <h:outputLabel for="m-description" value="Description:" />
+                    <p:inputText id="m-description" value="#{movieEditBB.movie.description}"
+                                 required="true" requiredMessage="Please provide a description">
+                    </p:inputText>
+                    <p:message for="m-description" display="icon" />
+                    
+
+
+                </h:panelGrid>
+
+                <p:messages id="msgs" />
+
+                <p:commandButton value="Save" action="#{movieEditBB.saveData()}"
+                                 style="margin-right: 1em;" update="@form" />
+
+                <p:commandButton value="Go Back" action="#{movieEditBB.goback()}"
+                                 style="margin-right: 1em;" />
+            </h:form>
+
+        </p:panel>
+        </ui:define>
+
+    </ui:composition>
+</html>
