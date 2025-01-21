@@ -22,10 +22,15 @@
 
         <h:commandButton value="Login" action="#{loginBB.doLogin}" />
         
+        <br />
+        <h:commandButton value="Nie masz konta? załóż je teraz!" action="#{userListBB.newAcount()}" />
+    
         <h:messages />
     </h:form>
 
 	</ui:define>
 
+    
+    
 </ui:composition>
 </html>

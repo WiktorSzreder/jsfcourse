@@ -18,6 +18,7 @@ import com.jsf.entities.User;
 @RequestScoped
 public class UserListBB {
     private static final String PAGE_USER_EDIT = "/pages/admin/userEdit?faces-redirect=true";
+    private static final String PAGE_USER_NEW_ACOUNT = "/public/userNew?faces-redirect=true";
     private static final String PAGE_STAY_AT_THE_SAME = null;
 
     private String username;
@@ -83,6 +84,14 @@ public class UserListBB {
         flash.put("user", user);
         
         return PAGE_USER_EDIT;
+    }
+        public String newAcount(){
+        User user = new User();
+        
+        // Pass object through Flash scope
+        flash.put("user", user);
+        
+        return PAGE_USER_NEW_ACOUNT;
     }
 
     // Edit an existing user, passing the object via Flash scope

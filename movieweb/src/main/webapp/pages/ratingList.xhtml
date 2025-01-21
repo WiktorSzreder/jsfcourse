@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="primefaces">
+
+    <ui:composition template="/templates/main-template.xhtml">
+
+        <ui:define name="title">Twoje Filmy</ui:define>
+
+        <ui:define name="content">
+
+
+
+            <h:form id="form-table" style="margin-bottom:1em;">
+
+                <!-- Use the filtered user ratings list -->
+                <p:dataTable value="#{ratingListBB.userRatings}" var="r">
+
+ 
+                    <p:column responsivePriority="5">
+                        <f:facet name="header">
+                            <h:outputText value="id rating" />
+                        </f:facet>
+                        <h:outputText value="#{r.idrating}" />
+                    </p:column> 
+
+                    <p:column responsivePriority="5">
+                        <f:facet name="header">
+                            <h:outputText value="Movie Title" />
+                        </f:facet>
+                        <h:outputText value="#{r.moviesIdmovies.title}" />
+                    </p:column> 
+
+                    <p:column responsivePriority="5">
+                        <f:facet name="header">
+                            <h:outputText value="Watch Date" />
+                        </f:facet>
+                        <h:outputText value="#{r.watchDate}" />
+                    </p:column> 
+
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Usuń z obejrzanych" />
+                        </f:facet>
+                        <p:commandButton value="Usuń ten seans" style="margin-right: 0.5em" icon="pi pi-trash" styleClass="ui-button-danger rounded-button"
+                                         action="#{ratingListBB.deleteForce(r.idrating)}"
+                                         update="@form" />
+                    </p:column>
+
+                </p:dataTable>
+            </h:form>
+            <p:messages />
+        </ui:define>
+ <p:messages />
+    </ui:composition>
+</html>

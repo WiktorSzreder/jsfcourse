@@ -12,51 +12,69 @@
 
         <ui:define name="content">
 
-       
+        <h:form> <!-- Ensure the search options are inside a form -->
+            <p:panel header="Search Options" toggleable="true" collapsed="true"
+                     style="margin-bottom: 1em;">
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputLabel value="Title:" />
+                    <p:inputText value="#{movieListBB.title}" />
+                    <p:commandButton value="Search" update="form" />
+                </h:panelGrid>
+            </p:panel>
+        </h:form>
 
-<h:form id="form">
+        <h:form> <!-- Ensure the "Dodaj nowy film" button is inside a form -->
+            <p:commandButton value="Dodaj nowy film" style="margin-bottom:1em;" 
+                             action="#{movieListBB.newMovie()}" 
+                             rendered="#{not empty remoteClient and (remoteClient.isInRole('Admin') or remoteClient.isInRole('Manager'))}"/>
+        </h:form>
 
-<div class="card">
-    <p:carousel value="#{movieListBB.list}" var="m" circular="true" autoplayInterval="3000"
-                numVisible="3" numScroll="1">
-        <f:facet name="header">
-            <h5>Movies Carousel</h5>
-        </f:facet>
+        <h:form id="form"> <!-- Keep the carousel in the existing form -->
+            <div class="card">
+                <p:carousel value="#{movieListBB.list}" var="m" circular="true" autoplayInterval="3000"
+                            numVisible="3" numScroll="1">
+                    <f:facet name="header">
+                        <h5>Movies Carousel</h5>
+                    </f:facet>
 
-        <div class="product-item" style="margin: 30px;">
-            <div class="product-item-content">
-                <div class="mb-3">
-                    <!-- Dodanie obrazka dla każdego filmu -->
-                    <p:graphicImage name="images/movies/#{m.idmovies}.jpg" style="width: 200px; height: 300px;"/>
-                </div>
-                <div>
-                    <h2 class="mb-1">
-                        <h:outputText value="#{m.title}" />
-                    </h2>
-                    <p class="mb-3">
-                        <h:outputText value="#{m.description}" />
-                    </p>
-                    <h6 class="mt-0 mb-3">
-                        Release Date: 
-                        <h:outputText value="#{m.releaseDate}">
-                            <f:convertDateTime pattern="dd-MM-yyyy" />
-                        </h:outputText>
-                    </h6>
-                    <div class="mt-5">
-                        <p:commandButton value="Edit" icon="pi pi-pencil" styleClass="rounded-button mr-2"
-                                         action="#{movieListBB.editMovie(m)}" />
-                        <p:commandButton value="Delete" icon="pi pi-trash" styleClass="ui-button-danger rounded-button"
-                                         action="#{movieListBB.deleteMovie(m)}" update="@form" />
+                    <div class="product-item" style="margin: 30px;">
+                        <div class="product-item-content">
+                            <div class="mb-3">
+                                
+                                <p:graphicImage name="images/movies/#{m.idmovies}.jpg" style="width: 200px; height: 300px;"/>
+                            </div>
+                            <div>
+                                <h2 class="mb-1">
+                                    <h:outputText value="#{m.title}" />
+                                </h2>
+                                <p class="mb-3">
+                                    <h:outputText value="#{m.description}" />
+                                </p>
+                                <h6 class="mt-0 mb-3">
+                                    Release Date: 
+                                    <h:outputText value="#{m.releaseDate}">
+                                        <f:convertDateTime pattern="dd-MM-yyyy" />
+                                    </h:outputText>
+                                </h6>
+                                <div class="mt-5">
+                                    <p:commandButton value="Edit" icon="pi pi-pencil" styleClass="rounded-button mr-2"
+                                                     action="#{movieListBB.editMovie(m)}" 
+                                                     rendered="#{not empty remoteClient and (remoteClient.isInRole('Admin') or remoteClient.isInRole('Manager'))}"/>
+                                    <p:commandButton value="Delete" icon="pi pi-trash" styleClass="ui-button-danger rounded-button"
+                                                     action="#{movieListBB.deleteMovie(m)}" update="@form" 
+                                                     rendered="#{not empty remoteClient and (remoteClient.isInRole('Admin') or remoteClient.isInRole('Manager'))}"/>
+                                    <p:commandButton value="Dodaj do obejrzanych" styleClass="rounded-button mr-2"
+                                                     action="#{ratingListBB.addToRating(m)}" update="@form"  
+                                                     rendered="#{not empty remoteClient}" />
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                </p:carousel>
             </div>
-        </div>
-    </p:carousel>
-</div>
+        </h:form>
 
-
-</h:form>
-            <p:messages />
+        <p:messages />
         </ui:define>
 
     </ui:composition>

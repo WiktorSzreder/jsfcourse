@@ -85,4 +85,7 @@ public class MovieListBB {
         movieDAO.remove(movie);
         return PAGE_STAY_AT_THE_SAME;
     }
+    
+    
+
 }

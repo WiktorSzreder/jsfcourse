@@ -11,7 +11,7 @@
     <ui:composition template="/templates/main-template.xhtml">
 
         <ui:define name="title">
-            JSF 05 - filtry, ochrona zasobów
+            Edytuj użytkownika
         </ui:define>
 
         <ui:define name="content">
@@ -46,19 +46,12 @@
                         <p:message for="u-password" display="icon"/>
 
 
-                    <h:outputLabel for="u-createdAt" value="Data utworzenia:" />
-                    <p:inputText id="u-createdAt" value="#{userEditBB.user.createdAt}"
-                                 required="true" requiredMessage="Podaj datę utworzenia"
-                                 converterMessage="Niepoprawny format daty (np. 15-07-2018)">
-                        <f:convertDateTime pattern="dd-MM-yyyy"/>
-                    </p:inputText>
-                    <p:message for="u-createdAt" display="icon"/>
                     
                         <h:outputLabel value="Wybierz role:" />
-    <p:selectManyCheckbox value="#{userEditBB.selectedRoleIds}">
-        <f:selectItems value="#{userEditBB.availableRoles}" var="role"
-                       itemValue="#{role.idroles}" itemLabel="#{role.name}" />
-    </p:selectManyCheckbox>
+                <p:selectManyCheckbox value="#{userEditBB.selectedRoleIds}">
+                    <f:selectItems value="#{userEditBB.availableRoles}" var="role"
+                                   itemValue="#{role.idroles}" itemLabel="#{role.name}" />
+                </p:selectManyCheckbox>
                 </h:panelGrid>
 
                 <p:messages id="msgs" />

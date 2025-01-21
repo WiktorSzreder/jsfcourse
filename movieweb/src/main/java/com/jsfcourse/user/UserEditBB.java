@@ -20,6 +20,8 @@ import com.jsf.dao.RolesDAO;
 
 import com.jsf.dao.UserDAO;
 import com.jsf.entities.User;
+import java.util.Collections;
+import java.util.Date;
 
 @Named
 @ViewScoped
@@ -135,6 +137,44 @@ public String saveData() {
         }
 
         return PAGE_USER_LIST;
+}
+public String saveNew() {
+    // No User object passed
+    if (loaded == null) {
+        return PAGE_STAY_AT_THE_SAME;
+    }
+
+    try {
+        // Sprawdzamy, czy istnieje użytkownik o takim samym e-mailu
+        User existingUser = userDAO.findByEmail(user.getEmail());
+
+        // Jeśli użytkownik istnieje i nie jest to użytkownik aktualnie edytowany
+        if (existingUser != null && !existingUser.getIdregisteredUser().equals(user.getIdregisteredUser())) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Email już istnieje w systemie", null));
+            return PAGE_STAY_AT_THE_SAME;
+        }
+
+        // Dodajemy rolę "User" do nowego użytkownika i ustawiamy czas utworzenia
+        if (user.getIdregisteredUser() == null) {
+            Roles userRole = rolesDAO.findByName("User"); // Zakładając, że metoda findByName zwraca rolę po nazwie
+            if (userRole != null) {
+                user.setRolesCollection(Collections.singletonList(userRole)); // Ustawiamy rolę "User"
+            }
+            // Ustawiamy bieżący czas jako czas utworzenia
+            user.setCreatedAt(new Date()); // Bieżąca data i godzina
+            // Nowy rekord
+            userDAO.create(user);
+        } else {
+            // Istniejący rekord
+            userDAO.merge(user);
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "An error occurred while saving", null));
+        return PAGE_STAY_AT_THE_SAME;
+    }
+
+    return PAGE_USER_LIST;
 }
 
 }

@@ -17,7 +17,7 @@ import com.jsf.entities.User;
 @Named
 @RequestScoped
 public class LoginBB {
-	private static final String PAGE_MAIN = "/pages/calc/calc?faces-redirect=true";
+	private static final String PAGE_MAIN = "/public/movieList?faces-redirect=true";
 	private static final String PAGE_LOGIN = "/pages/login";
 	private static final String PAGE_STAY_AT_THE_SAME = null;
 
@@ -73,6 +73,10 @@ public class LoginBB {
 		HttpServletRequest request = (HttpServletRequest) ctx.getExternalContext().getRequest();
 		client.store(request);
 
+                // Save the user ID explicitly in the session (this will be used in RatingListBB)
+                HttpSession session = request.getSession();
+                session.setAttribute("userId", user.getIdregisteredUser());
+                
 		// and enter the system (now SecurityFilter will pass the request)
 		return PAGE_MAIN;
 	}

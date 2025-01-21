@@ -8,7 +8,7 @@
 
     <ui:composition template="/templates/main-template.xhtml">
 
-        <ui:define name="title">actor List</ui:define>
+        <ui:define name="title">Lista aktorów</ui:define>
 
         <ui:define name="content">
 
@@ -20,31 +20,26 @@
 
                 <p:column responsivePriority="5">
                     <f:facet name="header">
-                        <h:outputText value="nazwa aktora" />
+                        <h:outputText value="imie" />
                     </f:facet>
                     <h:outputText value="#{a.firstName}" />
                 </p:column> 
 
-                                <p:column responsivePriority="5">
+                <p:column responsivePriority="5">
                     <f:facet name="header">
-                        <h:outputText value="id aktora" />
+                        <h:outputText value="nazwisko" />
                     </f:facet>
-                                    <h:outputText value="#{a.idactors}" />
+                                    <h:outputText value="#{a.lastName}" />
                 </p:column> 
-                <p:column>
+                
+                <p:column responsivePriority="5">
                     <f:facet name="header">
-                        <h:outputText value="opcje" />
+                        <h:outputText value="data urodzenia" />
                     </f:facet>
-                    <p:commandButton value="Edit" style="margin-right: 0.5em"
-                                     action="#{actorListBB.editActor(a)}"
-                                     update="@form" />
+                                    <h:outputText value="#{a.birthDate}" />
+                </p:column> 
+                
 
-                    <p:commandButton value="Usuń" style="margin-right: 0.5em"
-                                     action="#{actorListBB.deleteActor(a)}"
-                                     update="@form" />
-            
-                    
-                </p:column>
             </p:dataTable>
         </h:form>
             <p:messages />
